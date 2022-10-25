@@ -74,6 +74,7 @@ import requests
 import pandas as pd
 
 #Step 2: Fetching the necessary data
+from Portfolio.Stocks.stock import Stock
 
 """
 # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
@@ -105,10 +106,10 @@ def input_ticker(stock_ticker, interval = 60):
 
 #request user for input
 
-response = str(input("Can you provide the stock you want?"))
-intervalspec = input("At how many minutes interval do you want to see the price? 5, 10, or 60")
 
-print(input_ticker(response, intervalspec))
+if __name__=="__main__":
+    s = Stock('goog')
+    print(s.profit)
 
 
 
