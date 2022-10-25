@@ -109,7 +109,7 @@ def input_ticker(stock_ticker, interval = 60):
 
 if __name__=="__main__":
     s = Stock('goog')
-    print(s.profit)
+    print(s.get_purchase_date_time())
 
 
 
