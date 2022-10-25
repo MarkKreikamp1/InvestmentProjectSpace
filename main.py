@@ -71,6 +71,7 @@ you will add more features. Some suggestions:
 #Step 1: Getting imports
 
 import requests
+import pandas as pd
 
 #Step 2: Fetching the necessary data
 
@@ -82,11 +83,22 @@ data = r.json()
 
 print(data)
 """
+#TODO: Menu of stocks to choose from and their tickers -> below HTML Load
+# pretty printing of pandas dataframe
+#pd.set_option('expand_frame_repr', False)
+#pd.set_option("display.max_rows", None, "display.max_columns", None)
 
+# There are 4 tables on the Wikipedia page
+# we want the last table
 
+#payload=pd.read_html('https://en.wikipedia.org/wiki/Nasdaq-100')
+#hundred_tickers = payload[1]
 
-def input_ticker(stock_ticker):
-    url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=' + stock_ticker + '&apikey=X266B0IXMXQ7IN5J'
+#100 tickers
+# for each ticker in 100tickers:
+
+def input_ticker(stock_ticker, interval = 60):
+    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + stock_ticker + '&interval=' + str(interval) +'min&apikey=X266B0IXMXQ7IN5J'
     r = requests.get(url)
     data = r.json()
     return data
@@ -94,9 +106,9 @@ def input_ticker(stock_ticker):
 #request user for input
 
 response = str(input("Can you provide the stock you want?"))
+intervalspec = input("At how many minutes interval do you want to see the price? 5, 10, or 60")
 
-print(input_ticker(response))
-
+print(input_ticker(response, intervalspec))
 
 
 
