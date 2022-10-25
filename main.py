@@ -74,12 +74,32 @@ import requests
 
 #Step 2: Fetching the necessary data
 
+"""
 # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
 url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tesco&apikey=demo'
 r = requests.get(url)
 data = r.json()
 
 print(data)
+"""
+
+
+
+def input_ticker(stock_ticker):
+    url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=' + stock_ticker + '&apikey=X266B0IXMXQ7IN5J'
+    r = requests.get(url)
+    data = r.json()
+    return data
+
+#request user for input
+
+response = str(input("Can you provide the stock you want?"))
+
+print(input_ticker(response))
+
+
+
+
 
 
 
