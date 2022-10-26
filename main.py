@@ -109,7 +109,11 @@ def input_ticker(stock_ticker, interval = 60):
 
 if __name__=="__main__":
     s = Stock('goog')
-    print(s.get_purchase_date_time())
+    s.purchase_price = 2
+
+    s1 = Stock('IBM')
+    print(s1.purchase_date_time)
+    print(s.get_stock_data(5))
 
 
 
