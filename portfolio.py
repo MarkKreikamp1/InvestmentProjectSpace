@@ -20,22 +20,24 @@ class Portfolio:
         tickerSymbol = buystock.ticker
         currentprice = buystock.get_current_price()
         quantity = input(f'How much of {buystock} (Current price: {currentprice}) would you like to buy? ')
+        amount = round(float(currentprice) * float(quantity), 2)
         if tickerSymbol not in self.position:
-            self.position[tickerSymbol] = round(float(currentprice) * float(quantity),2)
+            self.position[tickerSymbol] = amount
         else:
-            self.position[tickerSymbol] += round(float(currentprice) * float(quantity), 2)
+            self.position[tickerSymbol] += amount
 
     def Sell(self):
         sellstock = Stock()
         tickerSymbol = sellstock.ticker
         currentprice = sellstock.get_current_price()
         quantity = input(f'How much of {sellstock} (Current position: {self.position[tickerSymbol]} would you like to sell? ')
+        amount = round(float(currentprice) * float(quantity), 2)
         if tickerSymbol not in self.position:
             return 'You do not own that stock!'
-        elif float(currentprice) * float(quantity) > self.position[tickerSymbol]:
+        elif amount > self.position[tickerSymbol]:
             return f'Insufficient stock to execute trade!'
         else:
-            self.position[tickerSymbol] -= round(float(currentprice) * float(quantity), 2)
+            self.position[tickerSymbol] -= amount
 
     def __str__(self):
         a = ''

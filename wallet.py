@@ -1,6 +1,5 @@
 class Wallet:
-    def __init__(self, name, initial_balance):
-        self.name = name
+    def __init__(self, initial_balance):
         self.balance = initial_balance
 
     def add(self, amount):
@@ -19,3 +18,6 @@ class Wallet:
                 print("Insufficient balance!")
         else:
             print("Can't withdraw non positive amount!")
+
+    def __str__(self):
+        return f'{self.balance}'
