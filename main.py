@@ -104,7 +104,7 @@ print(data)
 
 def run_program():
     p1 = Portfolio()
-    w1 = Wallet('Test', 20000)
+    w1 = Wallet(20000)
     while True:
         print('What would you like to do (please input number)?')
         action = int(input(f'1. Create Account\n2. Add/Withdraw money from Wallet\n3. View a stock\n4. Buy/Sell a stock\n5. View Portfolio\n6. Exit program\n'))
