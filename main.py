@@ -98,20 +98,15 @@ print(data)
 
 #100 tickers
 # for each ticker in 100tickers:
+continueflag = 'Y'
 
-def input_ticker(stock_ticker, interval = 60):
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + stock_ticker + '&interval=' + str(interval) +'min&apikey=X266B0IXMXQ7IN5J'
-    r = requests.get(url)
-    data = r.json()
-    return data
-
-#request user for input
-
-
-if __name__=="__main__":
-    s1 = Stock('IBM')
-    print(s1.purchase_date_time)
-
+while continueflag == 'Y':
+    print('What would you like to do (please input number)?')
+    action = input(f'1. Create Account\n2. Add/Withdraw money from Wallet\n3. View a stock\n4. Buy/Sell a stock\n5. View Portfolio\n6. Exit program\n')
+    if action not in [1, 2, 3, 4, 5, 6]:
+        print('Incorrect input, please type a 1,2,3,4,5 or 6')
+    elif action == 6:
+        continueflag = 'N'
 
 
 

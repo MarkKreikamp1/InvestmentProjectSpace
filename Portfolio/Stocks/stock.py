@@ -1,11 +1,11 @@
 import requests
 from Utils.dateUtils import DateUtils
-
+import Loading_data
 
 class Stock:
     def __init__(self, ticker):
         self.ticker = ticker
-        data = self.get_stock_data(self.ticker)
+        data, self.interval = Loading_data.input_ticker(self.ticker)
         self.last_refresh_date_time = self.get_last_refresh_date_time(data)
         self.historical_prices = self.get_historical_prices(data)
         self.current_price = self.get_current_price()
@@ -13,20 +13,20 @@ class Stock:
         self.purchase_price = self.get_purchase_price()
         self.profit = self.get_profit()
 
-    @staticmethod
-    def get_stock_data(ticker, interval=60):
-        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + ticker + '&interval=' + str(
-            interval) + 'min&apikey=X266B0IXMXQ7IN5J'
-        r = requests.get(url)
-        data = r.json()
-        return data
+    # @staticmethod
+    # def get_stock_data(ticker, interval=60):
+    #     url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + ticker + '&interval=' + str(
+    #         interval) + 'min&apikey=X266B0IXMXQ7IN5J'
+    #     r = requests.get(url)
+    #     data = r.json()
+    #     return data
 
     def get_last_refresh_date_time(self, stock_data_last_refresh):
         self.last_refresh_date_time = stock_data_last_refresh['Meta Data']['3. Last Refreshed']
         return self.last_refresh_date_time
 
     def get_historical_prices(self, data):
-        self.historical_prices = data['Time Series (60min)']
+        self.historical_prices = data[f'Time Series ({self.interval}min)']
         return self.historical_prices
 
     def get_current_price(self):
@@ -48,3 +48,9 @@ class Stock:
     def get_profit(self):
         self.profit = self.current_price - self.purchase_price
         return self.profit
+
+    def __str__(self):
+        return f'{self.ticker}'
+
+    def __repr__(self):
+        return f'{self.ticker}'

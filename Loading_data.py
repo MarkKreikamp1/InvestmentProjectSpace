@@ -34,24 +34,28 @@ hundred_tickers = payload[1]
 """
 #def request user for input
 
-def get_input():
-    stock = str(input("Can you provide the stock you want?"))
-    intervalspec = input("At how many minutes interval do you want to see the price? 5 or 60")
-    lookup_date = dt.datetime.strptime(input("What day of last week do you want to see the prices, following the %Y-%m-%d format?"), "%Y-%m-%d").date().isoformat()
+def get_stock(stock, interval):
+    if stock == 0:
+        stock = str(input("Can you provide the stock you want? "))
+    else:
+        stock
+    if interval == 0:
+        interval = input("At how many minutes interval do you want to see the price? 5 or 60 ")
+    else:
+        interval
+    return stock, interval
 
-    return stock, intervalspec, lookup_date
-
-def input_ticker():
-    stock_ticker, interval, lookup_date = get_input()
+def input_ticker(stock = 0, interval = 0):
+    stock_ticker, interval = get_stock(stock, interval)
     url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + stock_ticker + '&interval=' + str(interval) +'min&apikey=X266B0IXMXQ7IN5J'
     r = requests.get(url)
     data = r.json()
-    return data, interval, lookup_date
+    return data, interval
 
-def time_series_fun():
+def time_series_fun(lookup_date):
     #we have given the user options to select different stock types, now we want to unpack that data into a time series graph, or something of the sort.
 
-    stock_data, interval, lookup_date = input_ticker()
+    stock_data, interval = input_ticker()
 
     time_series = []
     open_values = []
@@ -64,7 +68,6 @@ def time_series_fun():
     print(time_series)
     print(open_values)
     return time_series, open_values, lookup_date
-
 
 
 """
