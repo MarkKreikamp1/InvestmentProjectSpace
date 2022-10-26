@@ -32,6 +32,7 @@ you will add more features. Some suggestions:
 """
 
 #Step 1: Getting imports
+    # construct a requirement file
 
 #Step 2: Fetching the necessary data
     #Essential / Basic
@@ -50,18 +51,18 @@ you will add more features. Some suggestions:
 
 #step 3: start building basic functionality
     # stock interaction
-        # Look at/investigate available stocks
+        # Look at/investigate available stocks -> Mark
             # historical value (1m/3m/1yr/3yr/5yr)
             # Optional: Financial Ratios
             # Optional: benchmarking (financial ratio's/performance based on segmentation(geographical/industry))
-        # Buying
+        # Buying -> Greg
             # stop loss
             # limit
-        # sell
+        # sell -> Greg
             # stop loss
             # limit
-    # wallet
-    # portfolio
+    # wallet -> Bram
+    # portfolio -> Bram
         # stock ticker
         # Base value
         # value changes over time
