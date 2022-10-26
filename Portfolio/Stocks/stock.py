@@ -2,42 +2,31 @@ import requests
 from Utils.dateUtils import DateUtils
 
 
-@staticmethod
-def get_stock_data(stock_ticker, interval=60):
-    url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + stock_ticker + '&interval=' + str(
-        interval) + 'min&apikey=X266B0IXMXQ7IN5J'
-    r = requests.get(url)
-    data = r.json()
-    return data
-
-
-stock_data = get_stock_data('Goog', interval=60)
-
-
 class Stock:
     def __init__(self, ticker):
         self.ticker = ticker
-        self.data = stock_data
-        self.last_refresh_date_time = self.get_last_refresh_date_time(self.data)
-        self.historical_prices = self.get_historical_prices()
+        data = self.get_stock_data(self.ticker)
+        self.last_refresh_date_time = self.get_last_refresh_date_time(data)
+        self.historical_prices = self.get_historical_prices(data)
         self.current_price = self.get_current_price()
         self.purchase_date_time = self.parse_purchase_date_time()
         self.purchase_price = self.get_purchase_price()
         self.profit = self.get_profit()
 
-    def get_stock_data(self, interval=60):
-        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + self.ticker + '&interval=' + str(
+    @staticmethod
+    def get_stock_data(ticker, interval=60):
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + ticker + '&interval=' + str(
             interval) + 'min&apikey=X266B0IXMXQ7IN5J'
         r = requests.get(url)
-        self.data = r.json()
-        return self.data
+        data = r.json()
+        return data
 
     def get_last_refresh_date_time(self, stock_data_last_refresh):
         self.last_refresh_date_time = stock_data_last_refresh['Meta Data']['3. Last Refreshed']
         return self.last_refresh_date_time
 
-    def get_historical_prices(self):
-        self.historical_prices = self.data['Time Series (60min)']
+    def get_historical_prices(self, data):
+        self.historical_prices = data['Time Series (60min)']
         return self.historical_prices
 
     def get_current_price(self):
