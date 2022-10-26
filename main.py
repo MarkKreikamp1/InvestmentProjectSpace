@@ -76,6 +76,8 @@ import pandas as pd
 
 #Step 2: Fetching the necessary data
 from Portfolio.Stocks.stock import Stock
+from portfolio import Portfolio
+from wallet import Wallet
 
 """
 # replace the "demo" apikey below with your own key from https://www.alphavantage.co/support/#api-key
@@ -98,19 +100,57 @@ print(data)
 
 #100 tickers
 # for each ticker in 100tickers:
-continueflag = 'Y'
 
-while continueflag == 'Y':
+
+def run_program():
+    p1 = Portfolio()
+    w1 = Wallet('Test', 20000)
+    while True:
+        print('What would you like to do (please input number)?')
+        action = int(input(f'1. Create Account\n2. Add/Withdraw money from Wallet\n3. View a stock\n4. Buy/Sell a stock\n5. View Portfolio\n6. Exit program\n'))
+        if action not in [1, 2, 3, 4, 5, 6]:
+            raise Exception('Incorrect input, please type a 1,2,3,4,5 or 6')
+        if action == 1:
+            p1 = Portfolio()
+            print('Portfolio created successfully')
+        elif action == 2:
+            add_or_withdraw_money_from_wallet(w1)
+        elif action == 3:
+            pass
+        elif action == 4:
+            trade_operations(p1)
+        elif action == 5:
+            print(p1.__str__())
+        else:
+            print('Program Exit Successful')
+            return
+
+
+def trade_operations(p1):
     print('What would you like to do (please input number)?')
-    action = input(f'1. Create Account\n2. Add/Withdraw money from Wallet\n3. View a stock\n4. Buy/Sell a stock\n5. View Portfolio\n6. Exit program\n')
-    if action not in [1, 2, 3, 4, 5, 6]:
-        print('Incorrect input, please type a 1,2,3,4,5 or 6')
-    elif action == 6:
-        continueflag = 'N'
+    operation = int(input(f'1. Buy\n2. Sell\n'))
+    if operation == 1:
+        p1.buy()
+    else:
+        p1.Sell()
 
 
+def add_or_withdraw_money_from_wallet(w1):
+    print(f'Current balance is {w1.balance}')
+    print('What would you like to do (please input number)?')
+    operation = int(input(f'1. Add cash\n2. Withdraw cash\n'))
+    if operation == 1:
+        amount_add = int(input(f'How much would you like to add?'))
+        w1.add(amount_add)
+        print(f"Succesfully added {amount_add} to wallet")
+    else:
+        amount_withdraw = int(input(f'How much would you like to withdraw?'))
+        w1.withdraw(amount_withdraw)
+        print(f"Succesfully removed {amount_withdraw} from wallet")
 
 
+if __name__ == "__main__":
+    run_program()
 
 
 

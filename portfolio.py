@@ -15,9 +15,9 @@ class Portfolio:
     def __init__(self):
         self.position = {}
 
-    def Buy(self):
-        tickerSymbol = input('What stock (ticker symbol) would you like to buy? ')
-        buystock = Stock(tickerSymbol)
+    def buy(self):
+        buystock = Stock()
+        tickerSymbol = buystock.ticker
         currentprice = buystock.get_current_price()
         quantity = input(f'How much of {buystock} (Current price: {currentprice}) would you like to buy? ')
         if tickerSymbol not in self.position:
@@ -26,8 +26,8 @@ class Portfolio:
             self.position[tickerSymbol] += round(float(currentprice) * float(quantity), 2)
 
     def Sell(self):
-        tickerSymbol = input(f'Which of the following positions: {self.position} would you like to sell? ')
-        sellstock = Stock(tickerSymbol)
+        sellstock = Stock()
+        tickerSymbol = sellstock.ticker
         currentprice = sellstock.get_current_price()
         quantity = input(f'How much of {sellstock} (Current position: {self.position[tickerSymbol]} would you like to sell? ')
         if tickerSymbol not in self.position:
@@ -49,10 +49,4 @@ class Portfolio:
             a += f'stock {keys} has balance of {value}\n'
         return a
 
-a1 = Portfolio()
-
-a1.Buy()
-a1.Sell()
-
-print(a1)
 

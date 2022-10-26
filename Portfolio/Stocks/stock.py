@@ -2,17 +2,21 @@ import requests
 from Utils.dateUtils import DateUtils
 import Loading_data
 
+
 class Stock:
-    def __init__(self, ticker):
-        self.ticker = ticker
-        data, self.interval = Loading_data.input_ticker(self.ticker)
+    def __init__(self):
+        data, interval = Loading_data.input_ticker(4)
+        self.ticker = self.get_ticker(data)
         self.last_refresh_date_time = self.get_last_refresh_date_time(data)
-        self.historical_prices = self.get_historical_prices(data)
+        self.historical_prices = self.get_historical_prices(data, interval)
         self.current_price = self.get_current_price()
         self.purchase_date_time = self.parse_purchase_date_time()
         self.purchase_price = self.get_purchase_price()
         self.profit = self.get_profit()
 
+
+    def get_ticker(self, data):
+        return data['Meta Data']['2. Symbol']
     # @staticmethod
     # def get_stock_data(ticker, interval=60):
     #     url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + ticker + '&interval=' + str(
@@ -25,8 +29,8 @@ class Stock:
         self.last_refresh_date_time = stock_data_last_refresh['Meta Data']['3. Last Refreshed']
         return self.last_refresh_date_time
 
-    def get_historical_prices(self, data):
-        self.historical_prices = data[f'Time Series ({self.interval}min)']
+    def get_historical_prices(self, data, interval):
+        self.historical_prices = data[f'Time Series ({interval}min)']
         return self.historical_prices
 
     def get_current_price(self):
